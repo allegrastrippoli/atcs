@@ -49,19 +49,20 @@ def getPearsonSimilarity(df, user1Ratings, user2):
         return num / den
 
 
-def getNeighboursByItem(df, user, item, allUsers, user1Ratings):
+def getNeighboursByItem(df, user, item, allUsers, user1Ratings,  k=30):
     """
     Given a user id, an item id and a number k, returns a list with the k most similar users that evaluated the given item
     """
-    k = 50
     neighbours = []
     for i in allUsers:
         iRating = df[(df["userId"] == i) & (df["movieId"] == item)]
         if i != user and not iRating.empty:
             iRatingValue = iRating["rating"].values[0]
-            neighbours.append(
-                (i, iRatingValue, getPearsonSimilarity(df, user1Ratings, i))
-            )
+            similarity = getPearsonSimilarity(df, user1Ratings, i)
+            if similarity > 0.3:
+                neighbours.append((i, iRatingValue, similarity))
+            if len(neighbours) == k:
+                break
 
     return sorted(neighbours, key=lambda x: x[2], reverse=True)[:k]
 
@@ -82,8 +83,8 @@ def predictMovieScores(df, user, movieId, allUsers):
         num += similarity * (rating - nMean)
         den += similarity
 
-    if den == 0:
-        return userMean
+    if den == 0 or num == 0:
+        return 0
 
     prediction = userMean + num / den
 
@@ -95,7 +96,7 @@ def getTopNRecommendations(df, user, allUsers, n=10):
     Given a user id and a number n, returns a list with the n top rated movies that the user has not seen
     """
 
-    maxRating = df["rating"].max()
+    maxRating = df["rating"].max() - 1
     toprated = []
 
     userMovies = df[df["userId"] == user]["movieId"].unique()
@@ -212,7 +213,9 @@ def getTop10GroupRecommendations(df, groupSize=3):
 
 def main():
     df = pd.read_csv("ml-latest-small/ratings.csv")
-    print(getTop10GroupRecommendations(df))
+    print(
+        getTopNRecommendations(df, 1, df["userId"].unique())
+    )  # [14, 16, 17, 25, 32, 52, 58, 62, 82, 85
 
 
 if __name__ == "__main__":

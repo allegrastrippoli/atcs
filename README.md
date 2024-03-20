@@ -13,5 +13,6 @@ python3 assignment.py
 To run a specific test within a module:
 
 ```bash
-pytest test.py::testPredictMovieScores
+pytest -v -r a test.py::testPredictMovieScores
+pytest -v -r a test.py::testHowManyNeighbours
 ```

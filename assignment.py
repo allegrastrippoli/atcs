@@ -106,10 +106,9 @@ def getTopNRecommendations(df, user, allUsers, n=10):
 
     for movie in notSeenMovies:
         prediction = predictMovieScores(df, user, movie, allUsers)
-        if prediction > maxRating - 0.8:
-            print(len(toprated))
+        if prediction > maxRating - 1:
             toprated.append(movie)
-        if len(toprated) == n * 2:
+        if len(toprated) == n:
             break
 
     return sorted(toprated, reverse=True)[:n]
@@ -215,7 +214,7 @@ def getTop10GroupRecommendations(df, groupSize=3):
 
 def main():
     df = pd.read_csv("ml-latest-small/ratings.csv")
-    print(getTopNRecommendations(df, 12, df["userId"].unique()))
+    print(getTopNRecommendations(df, 1, df["userId"].unique()))
 
 
 if __name__ == "__main__":

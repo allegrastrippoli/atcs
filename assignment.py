@@ -5,7 +5,8 @@ import cProfile
 
 def getCommonRatings(df, user1Ratings, user2):
     """
-    Given two users id, returns a dataframe with the common ratings of both users
+    Given two users id, returns a dataframe with the common ratings of both users.
+    Due to performance reasons istead of user 1 id, user1Ratings is pre-calculated
     """
     user2Ratings = df[df["userId"] == user2]
     commonRatings = pd.merge(user1Ratings, user2Ratings, on="movieId")
@@ -49,7 +50,7 @@ def getPearsonSimilarity(df, user1Ratings, user2):
         return num / den
 
 
-def getNeighboursByItem(df, user, item, allUsers, user1Ratings,  k=30):
+def getNeighboursByItem(df, user, item, allUsers, user1Ratings, k=30):
     """
     Given a user id, an item id and a number k, returns a list with the k most similar users that evaluated the given item
     """
@@ -96,7 +97,7 @@ def getTopNRecommendations(df, user, allUsers, n=10):
     Given a user id and a number n, returns a list with the n top rated movies that the user has not seen
     """
 
-    maxRating = df["rating"].max() - 1
+    maxRating = df["rating"].max()
     toprated = []
 
     userMovies = df[df["userId"] == user]["movieId"].unique()
@@ -105,12 +106,13 @@ def getTopNRecommendations(df, user, allUsers, n=10):
 
     for movie in notSeenMovies:
         prediction = predictMovieScores(df, user, movie, allUsers)
-        if prediction == maxRating:
+        if prediction > maxRating - 0.8:
+            print(len(toprated))
             toprated.append(movie)
-        if len(toprated) == n:
-            return toprated
+        if len(toprated) == n * 2:
+            break
 
-    return toprated
+    return sorted(toprated, reverse=True)[:n]
 
 
 def getGroupAverage(df, users, items, allUsers, k=10):
@@ -213,9 +215,7 @@ def getTop10GroupRecommendations(df, groupSize=3):
 
 def main():
     df = pd.read_csv("ml-latest-small/ratings.csv")
-    print(
-        getTopNRecommendations(df, 1, df["userId"].unique())
-    )  # [14, 16, 17, 25, 32, 52, 58, 62, 82, 85
+    print(getTopNRecommendations(df, 12, df["userId"].unique()))
 
 
 if __name__ == "__main__":

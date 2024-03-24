@@ -114,7 +114,7 @@ def getTopNRecommendations(df, user, allUsers, n=10):
     return sorted(toprated, reverse=True)[:n]
 
 
-def getGroupAverage(df, users, items, allUsers, k=10):
+def getAverageAggregation(df, users, items, allUsers, k=10):
     """
     Given a list of users and a list of items, returns a list with the k top rated items by the group, using the average approach
     """
@@ -135,7 +135,7 @@ def getGroupAverage(df, users, items, allUsers, k=10):
     return sorted(result, key=lambda x: x[1], reverse=True)[:k]
 
 
-def getGroupLeastMisery(df, users, items, allUsers, k=10):
+def getLeastMiseryAggregation(df, users, items, allUsers, k=10):
     """
     Given a list of users and a list of items, returns a list with the k top rated items by the group, using the least misery approach
     """
@@ -155,32 +155,29 @@ def getGroupLeastMisery(df, users, items, allUsers, k=10):
     return sorted(result, key=lambda x: x[1], reverse=True)[:k]
 
 
-def getSumSquareDifferences(users, movies, ratings, k=10):
-    """
-    Given a list of users, movies, ratings, returns a list with the k movies with the smallest sum of square differences
-    """
+def calculateDisagreement(users, movies, ratings, k=10):
 
     result = []
 
     for movie in movies:
-        ssd = 0
+        meanGoup = 0
         for i in range(len(users)):
-            for j in range(i + 1, len(users)):
-                user1 = users[i]
-                user2 = users[j]
-                if (user1, movie) in ratings and (user2, movie) in ratings:
-                    rating1 = ratings[(user1, movie)]
-                    rating2 = ratings[(user2, movie)]
-                    diff = (rating1 - rating2) ** 2
-                    ssd += diff
-        result.append((movie, ssd))
+            meanGoup += ratings[(users[i], movie)]
+        meanGoup /= len(users)
 
+        maxDis = 0
+        for i in range(len(users)):
+            candidate = abs(ratings[(users[i], movie)] - meanGoup)
+            if candidate > maxDis:
+                maxDis = candidate
+
+        result.append((movie, maxDis))
     return sorted(result, key=lambda x: x[1])[:k]
 
 
-def getGroupSSD(df, users, items, allUsers, k=10):
+def getMinDisagreementAggregation(df, users, items, allUsers, k=10):
     """
-    Given a list of users and movies, creates movie ratings predictions for each user and returns the k movies with the smallest sum of square differences
+    Given a list of users and movies, creates movie ratings predictions for each user and returns the k movies with the lowest disagreement
     """
 
     ratings = {}
@@ -194,10 +191,10 @@ def getGroupSSD(df, users, items, allUsers, k=10):
                 userRatingValue = userRating["rating"].values[0]
             ratings[(user, movie)] = userRatingValue
 
-    return getSumSquareDifferences(users, items, ratings)
+    return calculateDisagreement(users, items, ratings)
 
 
-def getTop10GroupRecommendations(df, groupSize=3):
+def getGroupRecommendations(df, groupSize=3):
     """
     Given a dataframe, create a group of users, calculate the top 10 recommendations for each user, and then return the top 10 recommendations for the group
     """
@@ -209,12 +206,15 @@ def getTop10GroupRecommendations(df, groupSize=3):
     for user in users:
         items += getTopNRecommendations(df, user, allUsers)
 
-    return getGroupSSD(df, users, set(items), allUsers)
+    print(items)
+
+    return getMinDisagreementAggregation(df, users, set(items), allUsers)
 
 
 def main():
     df = pd.read_csv("ml-latest-small/ratings.csv")
-    print(getTopNRecommendations(df, 1, df["userId"].unique()))
+    # print(getTopNRecommendations(df, 1, df["userId"].unique()))
+    print(getGroupRecommendations(df))
 
 
 if __name__ == "__main__":

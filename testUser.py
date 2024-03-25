@@ -9,7 +9,7 @@ def getDf():
 
 def getData():
     df = getDf()
-    user1Ratings = df[df["userId"] == 1]
+    user1Ratings = df[df["userId"] == 610]
     testData = []
 
     for i in range(len(user1Ratings)):
@@ -25,15 +25,15 @@ def getData():
 def testPredictMovieScores(movie, expected):
     df = getDf()
     allUsers = df["userId"].unique()
-    assert assignment.predictMovieScores(df, 1, movie, allUsers) == pytest.approx(
-        expected, abs=1
-    )
+    assert round(
+        assignment.predictMovieScores(df, 610, movie, allUsers), 1
+    ) == pytest.approx(expected, abs=1)
 
 
 @pytest.mark.parametrize("movie, _", getData())
 def testHowManyNeighbours(movie, _):
     df = getDf()
     allUsers, user1Ratings = df["userId"].unique(), df[df["userId"] == 1]
-    assert len(
-        assignment.getNeighboursByItem(df, 1, movie, allUsers, user1Ratings)
-    ) == pytest.approx(20, abs=10)
+    assert (
+        len(assignment.getNeighboursByItem(df, 1, movie, allUsers, user1Ratings)) == 30
+    )

@@ -155,7 +155,10 @@ def getLeastMiseryAggregation(df, users, items, allUsers, k=10):
     return sorted(result, key=lambda x: x[1], reverse=True)[:k]
 
 
-def calculateDisagreement(users, movies, ratings, k=10):
+def predictDisagreement(users, movies, ratings, k=10):
+    """
+    It helps to predict the disagreement between the users in the group
+    """
 
     result = []
 
@@ -171,13 +174,18 @@ def calculateDisagreement(users, movies, ratings, k=10):
             if candidate > maxDis:
                 maxDis = candidate
 
-        result.append((movie, maxDis))
+        if meanGoup > 3:
+            result.append((movie, maxDis, meanGoup))
+
+    if len(result) < k:
+        return sorted(result, key=lambda x: x[1])
+
     return sorted(result, key=lambda x: x[1])[:k]
 
 
 def getMinDisagreementAggregation(df, users, items, allUsers, k=10):
     """
-    Given a list of users and movies, creates movie ratings predictions for each user and returns the k movies with the lowest disagreement
+    Given a list of users and movies, returns the k movies with the lowest disagreement
     """
 
     ratings = {}

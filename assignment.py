@@ -199,7 +199,7 @@ def getMinDisagreementAggregation(df, users, items, allUsers, k=10):
                 userRatingValue = userRating["rating"].values[0]
             ratings[(user, movie)] = userRatingValue
 
-    return calculateDisagreement(users, items, ratings)
+    return predictDisagreement(users, items, ratings)
 
 
 def getGroupRecommendations(df, groupSize=3):

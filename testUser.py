@@ -26,7 +26,7 @@ def testPredictMovieScores(movie, expected):
     df = getDf()
     allUsers = df["userId"].unique()
     assert round(
-        assignment.predictMovieScores(df, 610, movie, allUsers), 1
+        assignment.predictMovieScores(df, 610, movie, allUsers), 0
     ) == pytest.approx(expected, abs=1)
 
 

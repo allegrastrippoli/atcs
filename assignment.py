@@ -92,7 +92,7 @@ def predictMovieScores(df, user, movieId, allUsers):
     return min(5, max(0, prediction))
 
 
-def getTopNRecommendations(df, user, allUsers, n=10):
+def getUserRecommendations(df, user, allUsers, n=10):
     """
     Given a user id and a number n, returns a list with the n top rated movies that the user has not seen
     """
@@ -112,6 +112,9 @@ def getTopNRecommendations(df, user, allUsers, n=10):
             break
 
     return sorted(toprated, reverse=True)[:n]
+
+
+############################################################################################################
 
 
 def getAverageAggregation(df, users, items, allUsers, k=10):
@@ -212,17 +215,105 @@ def getGroupRecommendations(df, groupSize=3):
     items = []
 
     for user in users:
-        items += getTopNRecommendations(df, user, allUsers)
-
-    print(items)
+        items += getUserRecommendations(df, user, allUsers)
 
     return getMinDisagreementAggregation(df, users, set(items), allUsers)
 
 
+############################################################################################################
+
+
+def getUserIdealSat(user, ratings, recommendedForUser):
+    """
+    Satisfaction when the ideal case for the user occurs
+    """
+    preferenceScore = 0
+
+    for item in recommendedForUser:
+        preferenceScore += ratings[(user, item)]
+
+    return preferenceScore
+
+
+def getUserCurrentSat(user, ratings, recommendedForGroup):
+    """
+    Satisfaction from the group recommendation list
+    """
+    preferenceScore = 0
+
+    for item in recommendedForGroup:
+        preferenceScore += ratings[(user, item)]
+
+    return preferenceScore
+
+
+def getHybridAggregation(users, items, ratings, groupSat, k=10):
+
+    result = []
+    for movie in items:
+
+        score = 0
+
+        for user in users:
+            if groupSat[user] < 0.5:
+                score += ratings[(user, movie)]
+
+        result.append((movie, score))
+
+    return [x[0] for x in sorted(result, key=lambda x: x[1], reverse=True)[:k]]
+
+
+def getSequentialRecommendations(df, rounds=3):
+    """
+    Given a dataframe, create a group of users, calculate the top 10 recommendations for each user, and then return the top 10 recommendations for the group
+    """
+
+    allUsers = df["userId"].unique()
+    users = [1, 16, 12]
+    userRecommendations = {}
+    groupSat = {user: 0 for user in users}
+    items = []
+
+    for user in users:
+        userRecommendations[user] = getUserRecommendations(df, user, allUsers)
+
+    for user in users:
+        items += userRecommendations[user]
+
+    items = set(items)
+
+    ratings = {}
+    for movie in items:
+        for user in users:
+
+            userRating = df[(df["userId"] == user) & (df["movieId"] == movie)]
+            if userRating.empty:
+                userRatingValue = predictMovieScores(df, user, movie, allUsers)
+            else:
+                userRatingValue = userRating["rating"].values[0]
+            ratings[(user, movie)] = userRatingValue
+
+    a = 0
+
+    for i in range(rounds):
+
+        groupRecommendations = getHybridAggregation(users, items, ratings, groupSat, 3)
+
+        for user in users:
+            userI = getUserIdealSat(user, ratings, userRecommendations[user])
+            userC = getUserCurrentSat(user, ratings, groupRecommendations)
+            groupSat[user] = userC / userI
+
+        print(f"{i} group recommendation: {groupRecommendations}")
+
+    return groupRecommendations
+
+
 def main():
     df = pd.read_csv("ml-latest-small/ratings.csv")
-    # print(getTopNRecommendations(df, 1, df["userId"].unique()))
-    print(getGroupRecommendations(df))
+    # print(getUserRecommendations(df, 1, df["userId"].unique()))
+    # print(getGroupRecommendations(df))
+    print(getSequentialRecommendations(df))
 
 
 if __name__ == "__main__":

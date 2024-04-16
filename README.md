@@ -4,6 +4,7 @@ Three scenarios are considered:
 * Ten movies are recommended to an individual user.
 * Ten movies are recommended to a group.
 * A group receives sequential recommendations.
+  
 The goal is to design a recommendation mechanism that is fair, efficient, and has a high accuracy rate. All tests are repeatable, and random elements in the code have been removed.
 
 ## SSD
@@ -14,7 +15,11 @@ The sequence diagram describes the flow of operations to return the top N recomm
 
 ## Results
 
-The experiments demonstrated promising results in terms of prediction accuracy and user satisfaction. The average accuracy score for predicting movie ratings was approximately 85%, with certain users achieving high accuracy rates. In group recommendations, the method presented in this paper, which minimizes disagreement among users, showed comparable results to other methods such as average and least misery. Indeed, although the algorithm performs well, it does not completely solve the fairness problem. In sequential recommendation, the most disadvantaged user improved his satisfaction from 39% to 94%. 
+The experiments demonstrated promising results in terms of prediction accuracy and user satisfaction. The average accuracy score for predicting movie ratings was approximately 85%, with certain users achieving high accuracy rates. 
+
+In group recommendations, the results are comparable to other methods such as average and least misery. Indeed, although the algorithm performs well, it does not completely solve the fairness problem. 
+
+In sequential recommendation, the most disadvantaged user improved his satisfaction from 39% to 94%. 
 
 ## Run
 

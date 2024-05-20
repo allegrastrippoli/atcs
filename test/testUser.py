@@ -1,10 +1,10 @@
-import assignment
 import pandas as pd
 import pytest
-
+from src.user import predictMovieScores
+from src.user import getNeighboursByItem
 
 def getDf():
-    return pd.read_csv("ml-latest-small/ratings.csv")
+    return pd.read_csv("../dataset/ratings.csv")
 
 
 def getData():
@@ -26,7 +26,7 @@ def testPredictMovieScores(movie, expected):
     df = getDf()
     allUsers = df["userId"].unique()
     assert round(
-        assignment.predictMovieScores(df, 610, movie, allUsers), 0
+        predictMovieScores(df, 610, movie, allUsers), 0
     ) == pytest.approx(expected, abs=1)
 
 
@@ -35,5 +35,5 @@ def testHowManyNeighbours(movie, _):
     df = getDf()
     allUsers, user1Ratings = df["userId"].unique(), df[df["userId"] == 1]
     assert (
-        len(assignment.getNeighboursByItem(df, 1, movie, allUsers, user1Ratings)) == 30
+        len(getNeighboursByItem(df, 1, movie, allUsers, user1Ratings)) == 30
     )

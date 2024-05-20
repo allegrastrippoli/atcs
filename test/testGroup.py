@@ -1,8 +1,7 @@
-import assignment
 import pandas as pd
 import pytest
-
-df = pd.read_csv("ml-latest-small/ratings.csv")
+from src.group import getMinDisagreementAggregation
+df = pd.read_csv("../dataset/ratings.csv")
 users = [1, 2]
 movies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ratings = {
@@ -33,7 +32,7 @@ expected = [1, 7, 4, 9, 5]
 def getData():
     return [
         movieId
-        for movieId, _, _ in assignment.predictDisagreement(users, movies, ratings, 5)
+        for movieId, _, _ in getMinDisagreementAggregation(users, movies, ratings, 5)
     ]
 
 

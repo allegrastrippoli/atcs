@@ -1,3 +1,4 @@
+import utility as u
 import networkx as nx
 
 #        COUNTING SORT
@@ -8,13 +9,13 @@ import networkx as nx
 # sort: [0, 2, 3, 5, 4, 1]  => node with id 3 has degree 1 and has position 2
 # pos:  [0, 5, 1, 2, 4, 3] => sort: pos=5, id=1, pos: pos=1, id=5
 
-def getDegree(graph):
+def get_degree(graph):
     deg = []
     for node in graph:
         deg.append(graph.degree(node))
     return deg
 
-def countingSort(graph, deg):
+def counting_sort(graph, deg):
     bins = [0] * (graph.number_of_nodes())
     for elem in deg:
         bins[elem] += 1
@@ -40,7 +41,7 @@ def countingSort(graph, deg):
 # sort: [3, ., 0, ., ., .]
 # pos:  [2, ., ., 0, ., .] node with id 3 has position 0, node with id 0 has position 2 
 
-def decreaseDeg(node, deg, bins, sort, pos):
+def decrease_degree(node, deg, bins, sort, pos):
     # node = 3
     posNode = pos[node] # 2
     posFirstNodeWithSameDegree = bins[deg[node]] # 0
@@ -57,32 +58,38 @@ def decreaseDeg(node, deg, bins, sort, pos):
     return deg, bins, sort, pos
     
 
-def main():
-    
-    graph = {0: [1,2,3,4],
-             1: [0,2,3,4],
-             2: [0,1,3,4],
-             3: [0,1,2,4],
-             4: [0,1,2,3,5],
-             5: [4],
-             6: [7,8],
-             7: [6,9],
-             8: [6,9],
-             9: [7,8]}
-                 
-    G = nx.Graph(graph)
+def get_k(list, k):
+    """
+    imagine that you have a graph with 3 values of coreness: deg:[k, k+1, k+2]
+    maybe you're interested in the highest coreness, maybe not...
+    you can choose which community you want to highlight picking your k paramenter
+    """
+    list.sort()
+    return list[k]
 
-    deg = getDegree(G)
-    # print(deg)
-    countingSort(G, deg)
-    bins, sort, pos = countingSort(G, deg)
-    # print(bins, sort, pos)
+
+def find_coreness(G):
+    deg = get_degree(G)
+    bins, sort, pos = counting_sort(G, deg)
     for node in sort: 
         for neighbour in G.neighbors(node):
             if deg[neighbour] > deg[node]:
-                deg, bins, sort, pos = decreaseDeg(neighbour, deg, bins, sort, pos)
+                deg, bins, sort, pos = decrease_degree(neighbour, deg, bins, sort, pos)
+    
+    max_value = max(deg)
 
-    print(deg)
+    V1 = set()
+    for i in range(0, len(deg)):
+        if deg[i] == max_value:
+            V1.add(i)
+        
+    return V1
+
+
+def main():
+    G = u.parser('moreno_lesmis/out.moreno_lesmis_lesmis')
+    V1 = find_coreness(G)
+    u.draw_graph(G, V1, 'kcore2')
 
 if __name__ == "__main__":
     main()

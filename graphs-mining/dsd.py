@@ -1,5 +1,5 @@
 import random as r
-import parser as p
+import utility as u
 import networkx as nx
 
 # Gu: undirected graph
@@ -46,16 +46,13 @@ def densest_subg(Gu, m, n):
             l = g
             S.remove('s')
             V1.update(S)
-    return V1
+    return V1 
     
 
 def main():
-    G = p.parser('dimacs10-as-22july06/out.dimacs10-as-22july06')
-    print(densest_subg(G, G.number_of_edges(), G.number_of_nodes()))
-
-
-
-
+    G = u.parser('moreno_lesmis/out.moreno_lesmis_lesmis')
+    V1 = densest_subg(G, G.number_of_edges(), G.number_of_nodes())
+    u.draw_graph(G, V1, 'dsd2')
     
 if __name__ == "__main__":
     main()

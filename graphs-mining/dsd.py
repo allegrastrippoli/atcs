@@ -52,7 +52,7 @@ def main():
     G = u.parser('subelj_euroroad/out.subelj_euroroad_euroroad')
     # G = u.test_graph()
     V1 = densest_subg(G, G.number_of_edges(), G.number_of_nodes())
-    u.draw_graph(G, V1, 'dsd')
+    u.draw_graph(G, V1, 'dsd', '#A9BEFC')
     
 if __name__ == "__main__":
     main()

@@ -31,15 +31,16 @@ def test_graph():
     return nx.Graph(graph)
 
 
-def draw_graph(G, V1, name):
-    nodelst = list(set(G.nodes()) - V1)
-    pos = nx.spring_layout(G)
-    nx.draw_networkx(G, pos, nodelist=V1, node_color='#A9BEFC', edge_color='#A9BEFC', with_labels=True)
-    nx.draw_networkx(G, pos, nodelist=nodelst, node_color='#EBEAE9', edge_color='#EBEAE9', with_labels=True)
-    nx.draw_networkx_edges(G, pos)
-    plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
-    plt.show()
 
+def draw_graph(G, V1, name, color):
+    sub = nx.subgraph(G,V1)
+    pos = nx.spring_layout(G)
+    nx.draw_networkx(sub, pos, node_color=color, width=2, with_labels=True)
+    nx.draw_networkx_edges(sub, pos, edge_color=color, width=2)
+    plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+    fig = plt.gcf()
+    fig.set_size_inches(18.5, 10.5)
+    fig.savefig(f'{name}plot.png', dpi=300)
 
 
 

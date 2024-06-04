@@ -1,6 +1,5 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-import re
 
 def parser(filepath):
 
@@ -30,17 +29,30 @@ def test_graph():
                  
     return nx.Graph(graph)
 
+def draw_test_graph(G, V1, name, color):
+    nodelist = list(set(G.nodes()) - V1)
+    pos = nx.spring_layout(G)
+    nx.draw_networkx(G, pos, nodelist=V1, node_color=color, width=2, with_labels=True)
+    nx.draw_networkx(G, pos, nodelist=nodelist, node_color='#E0D4C8', width=2, with_labels=True)
+    nx.draw_networkx_edges(G, pos, edge_color='#E0D4C8', width=2)
+    plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+    fig = plt.gcf()
+    fig.set_size_inches(18.5, 10.5)
+    fig.savefig(f'plots/{name}plot.png', dpi=300)
+    plt.close()
+
 
 
 def draw_graph(G, V1, name, color):
     sub = nx.subgraph(G,V1)
     pos = nx.spring_layout(G)
     nx.draw_networkx(sub, pos, node_color=color, width=2, with_labels=True)
-    nx.draw_networkx_edges(sub, pos, edge_color=color, width=2)
+    nx.draw_networkx_edges(sub, pos, edge_color='#E0D4C8', width=2)
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
     fig = plt.gcf()
     fig.set_size_inches(18.5, 10.5)
-    fig.savefig(f'{name}plot.png', dpi=300)
+    fig.savefig(f'plots/{name}plot.png', dpi=300)
+    plt.close()
 
 
 

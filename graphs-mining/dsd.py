@@ -1,6 +1,3 @@
-import random as r
-import utility as u
-import matplotlib.pyplot as plt
 import networkx as nx
 
 # Gu: undirected graph
@@ -47,12 +44,3 @@ def densest_subg(Gu, m, n):
     return V1 
     
 
-def main():
-    # G = u.parser('moreno_lesmis/out.moreno_lesmis_lesmis')
-    G = u.parser('subelj_euroroad/out.subelj_euroroad_euroroad')
-    # G = u.test_graph()
-    V1 = densest_subg(G, G.number_of_edges(), G.number_of_nodes())
-    u.draw_graph(G, V1, 'dsd', '#A9BEFC')
-    
-if __name__ == "__main__":
-    main()

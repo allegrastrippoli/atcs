@@ -1,4 +1,3 @@
-import utility as u
 import networkx as nx
 
 # COUNTING SORT
@@ -76,10 +75,3 @@ def find_coreness(graph):
     return V1
 
 
-def main():
-    G = u.parser('subelj_euroroad/out.subelj_euroroad_euroroad')
-    V1 = find_coreness(G)
-    u.draw_graph(G, V1, 'kcore', '#A9BEFC')
-
-if __name__ == "__main__":
-    main()

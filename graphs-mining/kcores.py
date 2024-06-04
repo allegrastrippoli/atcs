@@ -1,19 +1,17 @@
 import utility as u
-import matplotlib.pyplot as plt
 import networkx as nx
 
-#        COUNTING SORT
-#         0  1  2  3  4  5
+# COUNTING SORT
 # deg:   [] => the degree of node 0 is 1
-# bins:  []    => 4 nodes have degree equal to 1
-# bins:  []    => nodes with degree equal to 2, start at pos 4
+# bins:  [] => 4 nodes have degree equal to 1
+# bins:  [] => nodes with degree equal to 2, start at pos 4
 # sort: [0, 2, 3, 5, 4, 1]  => node with id 3 has degree 1 and has position 2
 # pos:  [0, 5, 1, 2, 4, 3] => sort: pos=2, id=3, pos: pos=3, id=2
 
-def get_degree(graph):
-    deg = [0] * len(graph.nodes())
+def get_degree(graph: nx.Graph):
+    deg = [0] * graph.number_of_nodes()
     for node in graph.nodes():
-        deg[node] = graph.degree(node)
+            deg[node] = graph.degree(node)
     return deg
 
 def counting_sort(graph, deg):
@@ -39,8 +37,7 @@ def counting_sort(graph, deg):
 
     return bins, sort, pos
 
-# sort: [3, ., 0, ., ., .]
-# pos:  [2, ., ., 0, ., .] node with id 3 has position 0, node with id 0 has position 2 
+
 def decrease_degree(node, deg, bins, sort, pos):
     posNode = pos[node] 
     posFirstNodeWithSameDegree = bins[deg[node]] 
@@ -62,28 +59,14 @@ def decrease_degree(node, deg, bins, sort, pos):
     return deg, bins, sort, pos
     
 
-def get_k(list, k):
-    """
-    imagine that you have a graph with 3 values of coreness: deg:[k, k+1, k+2]
-    maybe you're interested in the highest coreness, maybe not...
-    you can choose which community you want to highlight picking your k paramenter
-    """
-    list.sort()
-    return list[k]
-
-
-def find_coreness(G):
-    deg = get_degree(G)
-    bins, sort, pos = counting_sort(G, deg)
+def find_coreness(graph):
+    deg = get_degree(graph)
+    bins, sort, pos = counting_sort(graph, deg)
     for node in sort: 
-        for neighbour in G.neighbors(node):
+        for neighbour in graph.neighbors(node):
             if deg[neighbour] > deg[node]:
                 deg, bins, sort, pos = decrease_degree(neighbour, deg, bins, sort, pos)
 
-    
-    # HELLO = nx.k_core(G)
-    # nx.draw_networkx(HELLO, with_labels=True)
-    # plt.show()
     max_value = max(deg)
     V1 = set()
     for i in range(0, len(deg)):
@@ -94,12 +77,9 @@ def find_coreness(G):
 
 
 def main():
-    # G = u.test_graph()
-    G = u.parser('moreno_lesmis/out.moreno_lesmis_lesmis')
+    G = u.parser('subelj_euroroad/out.subelj_euroroad_euroroad')
     V1 = find_coreness(G)
     u.draw_graph(G, V1, 'kcore')
-
-
 
 if __name__ == "__main__":
     main()

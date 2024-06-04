@@ -1,5 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import re
 
 def parser(filepath):
 
@@ -9,12 +10,11 @@ def parser(filepath):
         next(f)
         next(f)
         for line in f:
-            word1 = int(line.split()[0])-1
-            word2 = int(line.split()[1])-1
-            G.add_edge(word1, word2)
+            n1 = int(line.split()[0])-1
+            n2 = int(line.split()[1])-1
+            G.add_edge(n1, n2)
 
     return G
-
 
 def test_graph():
     graph = {0: [1,2,3,4],
@@ -39,8 +39,8 @@ def draw_graph(G, V1, name):
     nx.draw_networkx_edges(G, pos)
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
     plt.show()
-    # plt.savefig(f'graph_{name}.png', dpi=300)
 
 
 
-    
+
+

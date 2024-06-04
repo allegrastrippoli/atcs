@@ -1,9 +1,11 @@
 import random as r
 import utility as u
+import matplotlib.pyplot as plt
 import networkx as nx
 
 # Gu: undirected graph
 # Gd: directed graph
+
 def get_flow_network(Gu, m, g):
 
     Gd = nx.DiGraph()
@@ -18,41 +20,39 @@ def get_flow_network(Gu, m, g):
     Gd.add_node('t')
 
     for node in Gu.nodes:
-        Gd.add_edge(node, 't', capacity=(m+2*g-Gd.degree[node]))
+        Gd.add_edge(node, 't', capacity=(m+2*g-Gu.degree[node]))
         Gd.add_edge('s', node, capacity=m)
 
     return Gd
     
-
-# The density of a graph is the ratio of the number of edges to the number of vertices of the graph. D = |E|/|V|
-
-# Let D be the density of the desired subgraph
+# Let D = |E|/|V| be the density of the desired subgraph
 # g is the guess for D
-# finché |V1| = 0 then g >= D
-# if |V1| != 0 then g <= D
+
 def densest_subg(Gu, m, n): 
-    l = 0  
-    u = m  
-    V1 = set() 
-    while u-l >= 1/(n*(n-1)):
+    min_density = 0  
+    max_density = m  
+    V1 = set()  
+    while max_density-min_density >= 1/(n*(n-1)):
         # for O(logn) times, g is updated 
-        g = (u+l)/2
+        g = (max_density+min_density)/2
         Gd = get_flow_network(Gu, m, g)
         _, partition = nx.minimum_cut(Gd, 's', 't')
-        S, T = partition
-        if S == {'s'}:
-            u = g
-        else: 
-            l = g
+        S, _ = partition
+        if S == {'s'}: # g >= D
+            max_density = g
+        else:  
+            min_density = g # g <= D
             S.remove('s')
             V1.update(S)
     return V1 
     
 
 def main():
-    G = u.parser('moreno_lesmis/out.moreno_lesmis_lesmis')
+    # G = u.parser('moreno_lesmis/out.moreno_lesmis_lesmis')
+    G = u.parser('subelj_euroroad/out.subelj_euroroad_euroroad')
+    # G = u.test_graph()
     V1 = densest_subg(G, G.number_of_edges(), G.number_of_nodes())
-    u.draw_graph(G, V1, 'dsd2')
+    u.draw_graph(G, V1, 'dsd')
     
 if __name__ == "__main__":
     main()

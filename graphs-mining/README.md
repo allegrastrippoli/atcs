@@ -29,11 +29,15 @@ A preliminary study regards a small community of 28 zebras and 62 bottlenose dol
 
 In both cases, the densest community is representative of the behavior of half of the individuals. The study of coreness and the discovery of the densest subgraph lead to similar results, although DSD seems less restrictive than kcore.
 
-Solarized dark                            |  Solarized Ocean
-:----------------------------------------:|:-------------------------------------------:
-![](plots/dolphins/full_dsd_plot.png)     |  ![](plots/dolphins/full_kcore_plot.png)
-:----------------------------------------:|:-------------------------------------------:
-![](plots/moreno_zebra/full_dsd_plot.png) | ![](plots/moreno_zebra/full_kcore_plot.png)
+<!-- Densest Subgraph Discovery                |  k-core
+:---------:|:-----------------------------------------:|:-------------------------------------------:
+  dolphins | ![](plots/dolphins/full_dsd_plot.png)     |  ![](plots/dolphins/full_kcore_plot.png)
+  zebra    | ![](plots/moreno_zebra/full_dsd_plot.png) |  ![](plots/moreno_zebra/full_kcore_plot.png) -->
+
+|                          |     Densest Subgraph Discovery                  |       k-core                                        |
+| ------------------------ | ----------------------------------------------- | --------------------------------------------------- | 
+| dolphins                 |     ![](plots/dolphins/full_dsd_plot.png)       |     ![](plots/dolphins/full_kcore_plot.png)         | 
+| zebra                    |     ![](plots/moreno_zebra/full_dsd_plot.png)   |   ![](plots/moreno_zebra/full_kcore_plot.png)       | 
 
 
 ## Case study 2

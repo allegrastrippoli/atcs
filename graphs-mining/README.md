@@ -14,6 +14,7 @@ Case study 1:
 [Zebra](http://konect.cc/networks/moreno_zebra/)
 
 Case study 2:
+[Zebra](http://konect.cc/networks/dimacs10-netscience)
 
 
 ## Case study 1
@@ -28,10 +29,12 @@ A preliminary study regards a small community of 28 zebras and 62 bottlenose dol
 
 In both cases, the densest community is representative of the behavior of half of the individuals. The study of coreness and the discovery of the densest subgraph lead to similar results, although DSD seems less restrictive than kcore.
 
-![Alt text](plots/dolphins/full_dsd_plot.png)
-![Alt text](plots/dolphins/full_kcore_plot.png)
-![Alt text](plots/moreno_zebra/full_dsd_plot.png)
-![Alt text](plots/moreno_zebra/full_kcore_plot.png)
+Solarized dark                            |  Solarized Ocean
+:----------------------------------------:|:-------------------------------------------:
+![](plots/dolphins/full_dsd_plot.png)     |  ![](plots/dolphins/full_kcore_plot.png)
+:----------------------------------------:|:-------------------------------------------:
+![](plots/moreno_zebra/full_dsd_plot.png) | ![](plots/moreno_zebra/full_kcore_plot.png)
+
 
 ## Case study 2
 

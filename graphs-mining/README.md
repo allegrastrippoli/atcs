@@ -10,24 +10,26 @@ In this study, communities are modeled as:
 ## Dataset 
 
 Case study 1:
-[Dolphins](http://konect.cc/networks/dolphins/),
-[Zebra](http://konect.cc/networks/moreno_zebra/)
+* [Dolphins](http://konect.cc/networks/dolphins/),
+* [Zebra](http://konect.cc/networks/moreno_zebra/)
 
 Case study 2:
-[Yeast protein](http://konect.cc/networks/moreno_propro)
+* [Yeast protein](http://konect.cc/networks/moreno_propro)
 
 
-## Case study 1
+# Case study 1
 
-A preliminary study regards a small community of 28 zebras and 62 bottlenose dolphins.
+A preliminary study regards a small community of 28 zebras and 62 bottlenose dolphins. A node represents a zebra (or a dolphin) and an edge shows that there was an interaction between two zebras (or two dolphins) during the study.
 
 |                          |     dolphins    |      zebras       |
 | ------------------------ | --------------- | ----------------- | 
-| coreness                 |      k=5        |      k=12         | 
-| n. of individuals k-core |       36        |      13           | 
-| n. of individuals DSD    |       44        |      14           | 
+| coreness                 |      k=5        |     k=12          | 
+| n. of individuals k-core |    36/62        |    13/28          | 
+| n. of individuals DSD    |    44/62        |    14/28          | 
 
-In both cases, the densest community includes roughly half of the total population. The densest subgraph and the community with the highest core are shown below. Zebras seem to form a very dense community with strong interactions, suggested by the high level of coreness.
+Analyzing the densest communities found by the DSD and kcore algorithms, it is possible to see that:
+* In both cases, the densest community accounts for about half of the population. 
+* Zebras appear to form a very dense community with strong interactions, achieving a high level of coreness.
 
 |                          |     Densest Subgraph Discovery                  |       k-core                                        |
 | ------------------------ | ----------------------------------------------- | --------------------------------------------------- | 
@@ -35,12 +37,23 @@ In both cases, the densest community includes roughly half of the total populati
 | zebras                   |     ![](plots/moreno_zebra/full_dsd_plot.png)   |   ![](plots/moreno_zebra/full_kcore_plot.png)       | 
 
 
-## Case study 2
+# Case study 2
 
-This undirected network contains protein interactions contained in yeast. A node represents a protein and an edge represents a metabolic interaction between two proteins. 
+This network contains protein interactions contained in yeast. A node represents a protein and an edge represents a metabolic interaction between two of them.  
+
+Research showed that proteins with a high degree were more important for the surivial of the yeast than others. Looking at the degree distribution it is possible to see that a node can reach even a degree around 50.
+
+ ![](plots/degree_distribution.png)  
+
+
+Coreness legend:
+* 🟪 k=1
+* 🟩 k=2
+* 🟦 k=3
+* 🟧 k=4
+* ⬛️ k=5
 
 |                          |     Densest Subgraph Discovery                  |       k-core                                        |
 | ------------------------ | ----------------------------------------------- | --------------------------------------------------- | 
 |  yeast proteins          |     ![](plots/moreno_propro/dsd.svg)            |     ![](plots/moreno_propro/coreness.svg)           | 
 
- Research showed that proteins with a high degree were more important for the surivial of the yeast than others.

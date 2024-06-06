@@ -57,7 +57,6 @@ def decrease_degree(node, deg, bins, sort, pos):
 
     return deg, bins, sort, pos
     
-
 def find_coreness(graph):
     deg = get_degree(graph)
     bins, sort, pos = counting_sort(graph, deg)
@@ -66,12 +65,8 @@ def find_coreness(graph):
             if deg[neighbour] > deg[node]:
                 deg, bins, sort, pos = decrease_degree(neighbour, deg, bins, sort, pos)
 
-    max_value = max(deg)
-    V1 = set()
-    for i in range(0, len(deg)):
-        if deg[i] == max_value:
-            V1.add(i)
-
-    return V1
+    return deg
 
 
+
+    

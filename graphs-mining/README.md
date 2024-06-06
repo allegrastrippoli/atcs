@@ -1,21 +1,18 @@
 # Graphs mining
 
-## Task
-
 This small application looks for communities on undirected, single-layer, unweighted graphs. Each community is supposed to represent a dense subgraph that provides a high-level representation of the whole network.
 In this study, communities are modeled as:
 * Connected components of the k-core. An implementation of Batagelj, Zaversnik algorithm that computes k-cores in $O(m)$ time is provided (where $m$ is the number of the edges of the graph).
 * Denser subgraphs. The densest subgraph is found in polynomial time by Goldberg's algorithm. 
 
-## Dataset 
+### Dataset 
 
 Case study 1:
-* [Dolphins](http://konect.cc/networks/dolphins/),
+* [Dolphins](http://konect.cc/networks/dolphins/)
 * [Zebra](http://konect.cc/networks/moreno_zebra/)
 
 Case study 2:
 * [Yeast protein](http://konect.cc/networks/moreno_propro)
-
 
 # Case study 1
 
@@ -41,19 +38,27 @@ Analyzing the densest communities found by the DSD and kcore algorithms, it is p
 
 This network contains protein interactions contained in yeast. A node represents a protein and an edge represents a metabolic interaction between two of them.  
 
-Research showed that proteins with a high degree were more important for the surivial of the yeast than others. Looking at the degree distribution it is possible to see that a node can reach even a degree around 50.
+Research showed that proteins with a high degree were more important for the surivial of the yeast than others. Looking at the degree distribution it is possible to see that a node can reach even a degree around 50!
 
  ![](plots/degree_distribution.png)  
 
+However, there are few proteins with such a large number of interactions. For this reason the coreness remains low with only a few elements reaching k = 6. The densest subgraph is located in the 4-5-6-cores and reveals the cohesion between 114 proteins (out of 1.870).
+
+ ### K-core 
 
 Coreness legend:
-* 🟪 k=1
-* 🟩 k=2
-* 🟦 k=3
-* 🟧 k=4
-* ⬛️ k=5
+* 🟪 k=2
+* 🟩 k=3
+* 🟦 k=4
+* 🟧 k=5
+* ⬛️ k=6
 
-|                          |     Densest Subgraph Discovery                  |       k-core                                        |
-| ------------------------ | ----------------------------------------------- | --------------------------------------------------- | 
-|  yeast proteins          |     ![](plots/moreno_propro/dsd.svg)            |     ![](plots/moreno_propro/coreness.svg)           | 
+  ![](plots/moreno_propro/coreness.svg)  
+
+
+### Densest Subgraph Discovery    
+
+ ![](plots/moreno_propro/dsd.svg) 
+
+
 

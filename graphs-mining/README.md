@@ -46,11 +46,11 @@ Researchers showed that proteins with a high degree are more important for the s
  ### K-core 
 
 Coreness legend:
-* 🟪 k=2
-* 🟩 k=3
-* 🟦 k=4
-* 🟧 k=5
-* ⬛️ k=6
+* 🟪 2-core
+* 🟩 3-core
+* 🟦 4-core
+* 🟧 5-core
+* ⬛️ 6-core
 
   ![](plots/moreno_propro/kcore.svg)  
 

@@ -14,7 +14,7 @@ Case study 1:
 Case study 2:
 * [Yeast protein](http://konect.cc/networks/moreno_propro)
 
-# Case study 1
+# Dolphins and Zebras
 
 A preliminary study regards a small community of 28 zebras and 62 bottlenose dolphins. A node represents a zebra (or a dolphin) and an edge shows that there was an interaction between two zebras (or two dolphins) during the study.
 
@@ -34,15 +34,13 @@ Analyzing the densest communities found by the DSD and kcore algorithms, it is p
 | zebras                   |     ![](plots/moreno_zebra/dsd.png)   |   ![](plots/moreno_zebra/kcore.png)       | 
 
 
-# Case study 2
+# Yeast proteins
 
-This network contains protein interactions contained in yeast. A node represents a protein and an edge represents a metabolic interaction between two of them.  
+The network contains protein interactions contained in yeast. A node represents a protein and an edge represents a metabolic interaction between two of them.  
 
 Research showed that proteins with a high degree were more important for the surivial of the yeast than others. Looking at the degree distribution it is possible to see that a node can reach even a degree around 50! However, there are few proteins with such a large number of interactions. For this reason the coreness remains low with only a few elements reaching k = 6. The densest subgraph is located in the 4-core and reveals the cohesion between 114 proteins (out of 1.870).
 
-<div style="text-align:center;">
-    <img src="plots/degree_distribution.png" alt="Alt text" width="600">
-</div>
+<img src="plots/degree_distribution.png" alt="Alt text" width="600">
 
 
  ### K-core 

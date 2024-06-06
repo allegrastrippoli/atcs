@@ -30,8 +30,8 @@ Analyzing the densest communities found by the DSD and kcore algorithms, it is p
 
 |                          |     Densest Subgraph Discovery                  |       k-core                                        |
 | ------------------------ | ----------------------------------------------- | --------------------------------------------------- | 
-| dolphins                 |     ![](plots/dolphins/full_dsd_plot.png)       |     ![](plots/dolphins/full_kcore_plot.png)         | 
-| zebras                   |     ![](plots/moreno_zebra/full_dsd_plot.png)   |   ![](plots/moreno_zebra/full_kcore_plot.png)       | 
+| dolphins                 |     ![](plots/dolphins/dsd.png)       |     ![](plots/dolphins/kcore.png)         | 
+| zebras                   |     ![](plots/moreno_zebra/dsd.png)   |   ![](plots/moreno_zebra/kcore.png)       | 
 
 
 # Case study 2
@@ -53,10 +53,12 @@ Coreness legend:
 * 🟧 k=5
 * ⬛️ k=6
 
-  ![](plots/moreno_propro/coreness.svg)  
+  ![](plots/moreno_propro/kcore.svg)  
 
 
 ### Densest Subgraph Discovery    
+
+* 🟥 if belongs to the densest subgraph
 
  ![](plots/moreno_propro/dsd.svg) 
 

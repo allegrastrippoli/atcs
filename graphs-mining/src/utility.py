@@ -29,50 +29,30 @@ def test_graph():
                  
     return nx.Graph(graph)
 
-def draw_full_graph(G :nx.Graph, V1, name, color):
-    nodelist = list(set(G.nodes()) - V1)
+def draw_full_graph(G :nx.Graph, community, path, color):
+    nodelist = list(set(G.nodes()) - community)
     pos = nx.spring_layout(G)
-    nx.draw_networkx(G, pos, nodelist=V1, node_color=color, width=2, with_labels=True)
+    nx.draw_networkx(G, pos, nodelist=community, node_color=color, width=2, with_labels=True)
     nx.draw_networkx(G, pos, nodelist=nodelist, node_color='#E0D4C8', width=2, with_labels=True)
     nx.draw_networkx_edges(G, pos, edge_color='#E0D4C8', width=2)
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
     fig = plt.gcf()
     fig.set_size_inches(18.5, 10.5)
-    fig.savefig(f'plots/{name}plot.png', dpi=300)
+    fig.savefig(f'{path}.png', dpi=300)
     plt.close()
  
-def draw_community_graph(G, V1, name, color):
-    sub = nx.subgraph(G,V1)
-    pos = nx.spring_layout(G, k=0.15, iterations=20)
+def draw_community_graph(G, community, path, color):
+    sub = nx.subgraph(G,community)
+    pos = nx.spring_layout(sub, k=0.15, iterations=20)
     nx.draw_networkx(sub, pos, node_color=color, width=2, with_labels=True)  
-    nx.draw_networkx_edges(G, pos, edge_color='#E0D4C8', width=1)
+    nx.draw_networkx_edges(sub, pos, edge_color='#E0D4C8', width=1)
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
     fig = plt.gcf()
     fig.set_size_inches(18.5, 10.5)
-    fig.savefig(f'plots/{name}plot.png', dpi=300)
+    fig.savefig(f'{path}.png', dpi=300)
     plt.close()
 
 
-def plot_everything():
-    G = test_graph()
-    V1 = dsd.densest_subg(G, G.number_of_edges(), G.number_of_nodes())
-    draw_full_graph(G, V1, f'dsd_test_', '#A9BEFC')
-    V1 = kcores.find_coreness(G)
-    draw_full_graph(G, V1, f'kcore_test_', '#6AB67F')
-
-    dataset_paths = ['dolphins/out.dolphins', 'moreno_zebra/out.moreno_zebra_zebra', 'moreno_lesmis/out.moreno_lesmis_lesmis', 'subelj_euroroad/out.subelj_euroroad_euroroad']
-
-    i = 0
-    for path in dataset_paths:
-        G = parser(path)
-        V1 = dsd.densest_subg(G, G.number_of_edges(), G.number_of_nodes())
-        draw_community_graph(G, V1, f'{path.split('/')[0]}/dsd{i}', '#A9BEFC')
-        V1 = kcores.find_coreness(G)
-        draw_community_graph(G, V1, f'{path.split('/')[0]}/kcore{i}', '#6AB67F')
-        # V1 = nx.k_core(G)
-        # draw_community_graph(G, V1, f'{path.split('/')[0]}/kcore_truth{i}', '#B56969')
-        # draw_community_graph(G, G.nodes(), f'{path.split('/')[0]}/original{i}', '#E0D4C8')
-        i = i+1
 
 def coreness_to_csv(labels, filename):
     

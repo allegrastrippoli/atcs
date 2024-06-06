@@ -38,13 +38,12 @@ Analyzing the densest communities found by the DSD and kcore algorithms, it is p
 
 This network contains protein interactions contained in yeast. A node represents a protein and an edge represents a metabolic interaction between two of them.  
 
-Research showed that proteins with a high degree were more important for the surivial of the yeast than others. Looking at the degree distribution it is possible to see that a node can reach even a degree around 50!
+Research showed that proteins with a high degree were more important for the surivial of the yeast than others. Looking at the degree distribution it is possible to see that a node can reach even a degree around 50! However, there are few proteins with such a large number of interactions. For this reason the coreness remains low with only a few elements reaching k = 6. The densest subgraph is located in the 4-core and reveals the cohesion between 114 proteins (out of 1.870).
 
- <!-- ![Alt text](plots/degree_distribution.png)   -->
+<div style="text-align:center;">
+    <img src="plots/degree_distribution.png" alt="Alt text" width="600">
+</div>
 
- <img src="plots/degree_distribution.png" alt="Alt text" width="600">
-
-However, there are few proteins with such a large number of interactions. For this reason the coreness remains low with only a few elements reaching k = 6. The densest subgraph is located in the 4-5-6-cores and reveals the cohesion between 114 proteins (out of 1.870).
 
  ### K-core 
 

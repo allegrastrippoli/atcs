@@ -40,7 +40,9 @@ This network contains protein interactions contained in yeast. A node represents
 
 Research showed that proteins with a high degree were more important for the surivial of the yeast than others. Looking at the degree distribution it is possible to see that a node can reach even a degree around 50!
 
- ![](plots/degree_distribution.png)  
+ ![Alt text](plots/degree_distribution.png)  
+
+ <img src="https://example.com/image.png" alt="Alt text" width="100">
 
 However, there are few proteins with such a large number of interactions. For this reason the coreness remains low with only a few elements reaching k = 6. The densest subgraph is located in the 4-5-6-cores and reveals the cohesion between 114 proteins (out of 1.870).
 

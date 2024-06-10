@@ -27,7 +27,7 @@ A preliminary study regards a small community of 28 zebras and 62 bottlenose dol
 Analyzing the densest communities found by the DSD and kcore algorithms, it is possible to see that:
 * In both cases, the densest community accounts for about half of the population! The remaining half is distributed among smaller, less representative communities. 
 * Zebras appear to form very strong interactions, achieving a high level of coreness. 
-* The two algorithms highlight similar portions of the graph. The densest subgraph, as expected, is less restrictive (includes more nodes) than the community with the highest coreness.
+* The two algorithms highlight similar portions of the graph and work as expected.
 
 |                          |     Densest Subgraph Discovery                  |       k-core                                        |
 | ------------------------ | ----------------------------------------------- | --------------------------------------------------- | 
